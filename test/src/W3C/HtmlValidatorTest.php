@@ -3,11 +3,12 @@
 namespace W3C;
 
 use ReflectionMethod;
+use SimpleXMLElement;
 use W3C\Validation\Result;
 use W3C\Validation\Violation;
 
 /**
- * TestCase for the HTMLValidator.
+ * TestCase for the HtmlValidator.
  *
  * @author Michel Hunziker <info@michelhunziker.com>
  */
@@ -25,7 +26,44 @@ class HtmlValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers W3C\HTMLValidator::parseResponse
+     * @covers W3C\HtmlValidator::validateInput
+     */
+    public function testValidateInput()
+    {
+        $validator = $this->getMock('W3C\HtmlValidator', array('validate'));
+        $validator->expects($this->once())
+            ->method('validate')
+            ->with(array('fragment' => 'My HTML'))
+            ->will($this->returnValue('Validated'));
+
+        $this->assertEquals('Validated', $validator->validateInput('My HTML'));
+    }
+
+    /**
+     * @covers W3C\HtmlValidator::validate
+     */
+    public function testValidate()
+    {
+        $method = new ReflectionMethod('W3C\HtmlValidator', 'validate');
+        $method->setAccessible(true);
+
+        $html = file_get_contents(__DIR__ . '/../../files/simple-valid.html');
+        $response = file_get_contents(__DIR__ . '/../../files/simple-valid.xml');
+
+        $validator = $this->getMock('W3C\HtmlValidator', array('parseResponse'));
+        $validator->expects($this->once())
+            ->method('parseResponse')
+            ->with($response)
+            ->will($this->returnValue('Parsed'));
+
+        $this->assertEquals(
+            'Parsed',
+            $method->invoke($validator, array('fragment' => $html))
+        );
+    }
+
+    /**
+     * @covers W3C\HtmlValidator::parseResponse
      */
     public function testParseResponseWithValidHtml()
     {
@@ -34,7 +72,7 @@ class HtmlValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers W3C\HTMLValidator::parseResponse
+     * @covers W3C\HtmlValidator::parseResponse
      */
     public function testParseResponseWithValidHtmlHasNoErrors()
     {
@@ -43,7 +81,7 @@ class HtmlValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers W3C\HTMLValidator::parseResponse
+     * @covers W3C\HtmlValidator::parseResponse
      */
     public function testParseResponseWithValidHtmlHasNoWarnings()
     {
@@ -52,7 +90,7 @@ class HtmlValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers W3C\HTMLValidator::parseResponse
+     * @covers W3C\HtmlValidator::parseResponse
      */
     public function testParseResponseWithInvalidHtml()
     {
@@ -61,7 +99,7 @@ class HtmlValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers W3C\HTMLValidator::parseResponse
+     * @covers W3C\HtmlValidator::parseResponse
      */
     public function testParseResponseWithInvalidHtmlSetsErrors()
     {
@@ -73,7 +111,19 @@ class HtmlValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers W3C\HTMLValidator::parseResponse
+     * @covers W3C\HtmlValidator::parseResponse
+     */
+    public function testParseResponseWithInvalidHtmlSetsWarnings()
+    {
+        $result = $this->parseFile('warning.xml');
+        $warnings = $result->getWarnings();
+
+        $this->assertCount(1, $warnings);
+        $this->assertContainsOnlyInstancesOf('W3C\Validation\Violation', $warnings);
+    }
+
+    /**
+     * @covers W3C\HtmlValidator::parseResponse
      * @depends testParseResponseWithInvalidHtmlSetsErrors
      */
     public function testParseResponseWithInvalidHtmlSetsViolations()
@@ -90,6 +140,38 @@ class HtmlValidatorTest extends \PHPUnit_Framework_TestCase
             ->setSource('&#60;body<strong title="Position where error was detected.">&#62;</strong>');
 
         $this->assertEquals($expectedViolation, $errors[1]);
+    }
+
+    /**
+     * @covers W3C\HtmlValidator::getEntry
+     */
+    public function testGetEntry()
+    {
+        $method = new ReflectionMethod('W3C\HtmlValidator', 'getEntry');
+        $method->setAccessible(true);
+
+        $xmlString = <<<'XML'
+<warning>
+    <line>3</line>
+    <col>9</col>
+    <message>My Message</message>
+    <messageid>my-id</messageid>
+    <explanation>Some info</explanation>
+    <source>Unknown</source>
+</warning>
+XML;
+        $xml = new SimpleXMLElement($xmlString);
+        $violation = new Violation();
+        $violation->setLine(3)
+            ->setColumn(9)
+            ->setMessage('My Message')
+            ->setExplanation('Some info')
+            ->setSource('Unknown');
+
+        $this->assertEquals(
+            $violation,
+            $method->invoke($this->validator, $xml)
+        );
     }
 
     /**

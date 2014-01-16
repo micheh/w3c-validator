@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+    <env:Body>
+        <m:markupvalidationresponse
+                env:encodingStyle="http://www.w3.org/2003/05/soap-encoding"
+                xmlns:m="http://www.w3.org/2005/10/markup-validator">
+
+            <m:uri>upload://Form Submission</m:uri>
+            <m:checkedby>http://validator.w3.org/</m:checkedby>
+            <m:doctype>-//W3C//DTD XHTML 1.0 Strict//EN</m:doctype>
+            <m:charset>utf-8</m:charset>
+            <m:validity>true</m:validity>
+            <m:errors>
+                <m:errorcount>0</m:errorcount>
+                <m:errorlist>
+
+                </m:errorlist>
+            </m:errors>
+            <m:warnings>
+                <m:warningcount>2</m:warningcount>
+                <m:warninglist>
+
+
+                    <m:warning>
+                        <m:line>10</m:line>
+                        <m:col>7</m:col>
+                        <m:messageid>35</m:messageid>
+                        <m:message>Dummy Message
+                        </m:message>
+                        <m:explanation>No info available</m:explanation>
+                        <m:source>PHPUnit</m:source>
+                    </m:warning>
+
+
+                    <m:warning>
+                        <m:messageid>W27</m:messageid>
+                        <m:message>No Character encoding declared at document
+                            level
+                        </m:message>
+                    </m:warning>
+
+
+                    <m:warning>
+                        <m:messageid>W28</m:messageid>
+                        <m:message>Using Direct Input mode: UTF-8 character
+                            encoding assumed
+                        </m:message>
+                    </m:warning>
+
+
+                </m:warninglist>
+            </m:warnings>
+        </m:markupvalidationresponse>
+    </env:Body>
+</env:Envelope>
