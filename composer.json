@@ -1,0 +1,14 @@
+{
+    "name": "micheh/w3c-validator",
+    "description": "Validate HTML using the W3C HTML Validator API",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Michel Hunziker",
+            "email": "info@michelhunziker.com"
+        }
+    ],
+    "autoload": {
+        "classmap": ["src", "test"]
+    }
+}

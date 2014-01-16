@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+<env:Body>
+<m:markupvalidationresponse env:encodingStyle="http://www.w3.org/2003/05/soap-encoding" xmlns:m="http://www.w3.org/2005/10/markup-validator">
+    
+    <m:uri>upload://Form Submission</m:uri>
+    <m:checkedby>http://validator.w3.org/</m:checkedby>
+    <m:doctype>-//W3C//DTD XHTML 1.0 Strict//EN</m:doctype>
+    <m:charset>utf-8</m:charset>
+    <m:validity>false</m:validity>
+    <m:errors>
+        <m:errorcount>3</m:errorcount>
+        <m:errorlist>
+          
+            <m:error>
+                <m:line>2</m:line>
+                <m:col>1</m:col>
+                <m:message>Missing xmlns attribute for element html. The value should be: http://www.w3.org/1999/xhtml</m:message>
+                <m:messageid>no-xmlns</m:messageid>
+                <m:explanation>  <![CDATA[
+                      <p class="helpwanted">
+      <a
+        href="feedback.html?uri=;errmsg_id=no-xmlns#errormsg"
+	title="Suggest improvements on this error message through our feedback channels" 
+      >&#x2709;</a>
+    </p>
+
+    <div class="ve no-xmlns">
+    <p>
+      Many Document Types based on XML need a mandatory <code>xmlns</code> attribute on the root element. For example, the root element for <a href="http://www.w3.org/TR/xhtml1/#strict">XHTML</a> might look like:<br />
+      <code>&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</code>
+    </p>
+  </div>
+
+                  ]]>
+                </m:explanation>
+                <m:source><![CDATA[<strong title="Position where error was detected.">&#60;</strong>html&#62;]]></m:source>
+            </m:error>
+           
+            <m:error>
+                <m:line>3</m:line>
+                <m:col>6</m:col>
+                <m:message>document type does not allow element &quot;body&quot; here</m:message>
+                <m:messageid>64</m:messageid>
+                <m:explanation>  <![CDATA[
+                      <p class="helpwanted">
+      <a
+        href="feedback.html?uri=;errmsg_id=64#errormsg"
+	title="Suggest improvements on this error message through our feedback channels" 
+      >&#x2709;</a>
+    </p>
+
+    <div class="ve mid-64">
+    <p>
+      The element named above was found in a context where it is not allowed.
+      This could mean that you have incorrectly nested elements -- such as a
+      "style" element in the "body" section instead of inside "head" -- or
+      two elements that overlap (which is not allowed).
+    </p>
+    <p>
+      One common cause for this error is the use of XHTML syntax in HTML
+      documents. Due to HTML's rules of implicitly closed elements, this error
+      can create cascading effects. For instance, using XHTML's "self-closing"
+      tags for "meta" and "link" in the "head" section of a HTML document may
+      cause the parser to infer the end of the "head" section and the
+      beginning of the "body" section (where "link" and "meta" are not
+      allowed; hence the reported error).
+    </p>
+  </div>
+
+                  ]]>
+                </m:explanation>
+                <m:source><![CDATA[&#60;body<strong title="Position where error was detected.">&#62;</strong>]]></m:source>
+            </m:error>
+           
+            <m:error>
+                <m:line>10</m:line>
+                <m:col>7</m:col>
+                <m:message>end tag for &quot;html&quot; which is not finished</m:message>
+                <m:messageid>73</m:messageid>
+                <m:explanation>  <![CDATA[
+                      <p class="helpwanted">
+      <a
+        href="feedback.html?uri=;errmsg_id=73#errormsg"
+	title="Suggest improvements on this error message through our feedback channels" 
+      >&#x2709;</a>
+    </p>
+
+    <div class="ve mid-73">
+    <p>
+      Most likely, you nested tags and closed them in the wrong order. For 
+      example &lt;p&gt;&lt;em&gt;...&lt;/p&gt; is not acceptable, as &lt;em&gt;
+      must be closed before &lt;p&gt;. Acceptable nesting is: 
+      &lt;p&gt;&lt;em&gt;...&lt;/em&gt;&lt;/p&gt;  
+    </p>
+    <p>
+      Another possibility is that you used an element which requires
+      a child element that you did not include. Hence the parent element
+      is "not finished", not complete. For instance, in HTML the &lt;head&gt;
+      element must contain a &lt;title&gt; child element, lists require
+      appropriate list items (&lt;ul&gt; and &lt;ol&gt; require &lt;li&gt;;
+      &lt;dl&gt; requires &lt;dt&gt; and &lt;dd&gt;), and so on.
+    </p>
+  </div>
+
+                  ]]>
+                </m:explanation>
+                <m:source><![CDATA[&#60;/html<strong title="Position where error was detected.">&#62;</strong>]]></m:source>
+            </m:error>
+           
+        </m:errorlist>
+    </m:errors>
+    <m:warnings>
+        <m:warningcount>2</m:warningcount>
+        <m:warninglist>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <m:warning><m:messageid>W27</m:messageid><m:message>No Character encoding declared at document level</m:message></m:warning>
+
+
+  <m:warning><m:messageid>W28</m:messageid><m:message>Using Direct Input mode: UTF-8 character encoding assumed</m:message></m:warning>
+
+
+
+
+
+
+        
+        </m:warninglist>
+    </m:warnings>
+</m:markupvalidationresponse>
+</env:Body>
+</env:Envelope>

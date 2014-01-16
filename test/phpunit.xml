@@ -1,0 +1,17 @@
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://github.com/sebastianbergmann/phpunit/raw/master/phpunit.xsd"
+         bootstrap="./../vendor/autoload.php"
+         strict="true"
+         forceCoversAnnotation="true">
+    <testsuites>
+        <testsuite name="W3C">
+            <directory>./src/W3C/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./../src/</directory>
+        </whitelist>
+    </filter>
+</phpunit>
