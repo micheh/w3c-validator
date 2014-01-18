@@ -7,9 +7,11 @@ use W3C\Validation\Result;
 use W3C\Validation\Violation;
 
 /**
- * @todo add phpDoc
+ * Class which validates HTML with the W3C Validator API.
  *
  * @author Michel Hunziker <info@michelhunziker.com>
+ * @copyright Copyright (c) 2014 Michel Hunziker <info@michelhunziker.com>
+ * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD-3-Clause License
  */
 class HtmlValidator
 {
@@ -20,7 +22,9 @@ class HtmlValidator
 
 
     /**
-     * @param string $html
+     * Validates the provided HTML string and returns a result.
+     *
+     * @param string $html HTML string to validate
      * @return Result
      */
     public function validateInput($html)
@@ -30,7 +34,9 @@ class HtmlValidator
     }
 
     /**
-     * @param array $data
+     * External call to the W3C Validation API, using curl.
+     *
+     * @param array $data The data to post to the API.
      * @return Result
      */
     protected function validate(array $data)
@@ -49,7 +55,9 @@ class HtmlValidator
     }
 
     /**
-     * @param string $response
+     * Parses the SOAP response of the API and returns a new Result object.
+     *
+     * @param string $response SOAP response of the API
      * @return Result
      */
     protected function parseResponse($response)
@@ -77,7 +85,9 @@ class HtmlValidator
     }
 
     /**
-     * @param SimpleXMLElement $xml
+     * Create a violation object from the provided xml.
+     *
+     * @param SimpleXMLElement $xml XML element which contains the violation details
      * @return Violation
      */
     protected function getEntry(SimpleXMLElement $xml)

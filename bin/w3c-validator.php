@@ -7,6 +7,8 @@
  * to create a checkstyle report at the specified location.
  *
  * @author Michel Hunziker <info@michelhunziker.com>
+ * @copyright Copyright (c) 2014 Michel Hunziker <info@michelhunziker.com>
+ * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD-3-Clause License
  */
 
 $arguments = array_slice($argv, 1);
