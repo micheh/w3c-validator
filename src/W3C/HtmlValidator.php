@@ -19,6 +19,7 @@ class HtmlValidator
      * @var string
      */
     protected $url = 'http://validator.w3.org/check';
+    protected $urlAtom = 'http://validator.w3.org/feed/check.cgi';
 
 
     /**
@@ -27,10 +28,10 @@ class HtmlValidator
      * @param string $html HTML string to validate
      * @return Result
      */
-    public function validateInput($html)
+    public function validateInput($html, $type = null)
     {
         $data = array('fragment' => $html);
-        return $this->validate($data);
+        return ($type == "atom") ? $this->validateFeed($data) : $this->validate($data);
     }
 
     /**
@@ -55,16 +56,47 @@ class HtmlValidator
     }
 
     /**
+     * External call to the W3C Validation API, using curl.
+     *
+     * @param array $data The data to post to the API.
+     * @return Result
+     */
+    protected function validateFeed(array $data)
+    {
+        $get = [
+            'output' => 'soap12',
+            'rawdata' => $data['fragment']
+        ];
+        $options = [];
+        $defaults = array(
+            CURLOPT_URL => $this->urlAtom. (strpos($this->urlAtom, '?') === FALSE ? '?' : ''). http_build_query($get),
+            CURLOPT_HEADER => 0,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_TIMEOUT => 4
+        );
+        error_log($defaults[CURLOPT_URL]);
+        $ch = curl_init();
+        curl_setopt_array($ch, ($options + $defaults));
+        if( ! $result = curl_exec($ch))
+        {
+            trigger_error(curl_error($ch));
+        }
+        curl_close($ch);
+        
+        return $this->parseResponse($result, 'feedvalidationresponse');
+    }
+
+    /**
      * Parses the SOAP response of the API and returns a new Result object.
      *
      * @param string $response SOAP response of the API
      * @return Result
      */
-    protected function parseResponse($response)
+    protected function parseResponse($response, $parentNode = 'markupvalidationresponse')
     {
         $xml = new SimpleXMLElement($response);
         $ns = $xml->getNamespaces(true);
-        $data = $xml->children($ns['env'])->children($ns['m'])->markupvalidationresponse;
+        $data = $xml->children($ns['env'])->children($ns['m'])->$parentNode;
 
         $result = new Result();
         $result->setIsValid($data->validity == 'true');
